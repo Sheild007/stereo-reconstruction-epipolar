@@ -109,8 +109,8 @@ def find_projection(pts2d, pts3d):
 
 
 if __name__ == '__main__':
-    pts2d = np.loadtxt("task1/pts2d.txt")
-    pts3d = np.loadtxt("task1/pts3d.txt")
+    pts2d = np.loadtxt("data/task1/pts2d.txt")
+    pts3d = np.loadtxt("data/task1/pts3d.txt")
 
     # Alternately, for some of the data, we provide pts1/pts1_3D, which you
     # can check your system on via
