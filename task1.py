@@ -38,6 +38,15 @@ def find_projection(pts2d, pts3d):
         b[2 * i] = u
         b[2 * i + 1] = v
     
+
+    At_A = np.zeros((11, 11))
+    for i in range(11):
+        for j in range(11):
+            At_A[i, j] = np.sum(A[:, i] * A[:, j])
+  
+    At_b = np.zeros(11)
+    for i in range(11):
+        At_A[i] = np.sum(A[:, i] * b)
     
     
     
