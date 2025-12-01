@@ -179,5 +179,20 @@ if __name__ == '__main__':
         # FCheck, _ = cv2.findFundamentalMat(pts1, pts2, cv2.FM_8POINT)
 
         #######################################################################
-        # TODO: Your code here                                                #
+        F = find_fundamental_matrix(shape, pts1, pts2)
+        
+        # Report F for specific datasets
+        if name in ["temple", "ztrans", "xtrans"]:
+            print(f"Fundamental Matrix for {name}:\n{F}")
+
+        
+        e1, e2 = compute_epipoles(F)
+        
+        # Save Epipole images for temple ,reallyInwards and xtrans
+        if name in ["temple", "reallyInwards", "xtrans"]:
+            print(f"Epipoles for {name}:\n e1: {e1}\n e2: {e2}")
+           
+
+        draw_epipolar(img1, img2, F, pts1, pts2, file_name=os.path.join(output, f"{name}_epipolar.png"))
+        print(f"Saved visualization to {output}{name}_epipolar.png")
         #######################################################################
