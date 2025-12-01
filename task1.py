@@ -20,7 +20,7 @@ def find_projection(pts2d, pts3d):
     - P: Numpy array of shape (3,4) giving the camera projection matrix P
 
     """
-    M = None
+     M=np.zeros((3,4))
     ###########################################################################
     
     
@@ -54,26 +54,25 @@ def find_projection(pts2d, pts3d):
     augmented_matrix[:,:11]=At_A
     augmented_matrix[:,11]=At_b
 
+
+    #converting to Echelon form
+    for i in range(11):
+        
+        max_row = i
+        for j in range(i + 1, 11):
+            if abs(augmented_matrix[j, i]) > abs(augmented_matrix[max_row, i]):
+                max_row = j
+        
+        augmented_matrix[[i, max_row]] = augmented_matrix[[max_row, i]]
     
+        for j in range(i + 1, 11):
+            if abs(augmented_matrix[i, i]) > 1e-10:
+                factor = augmented_matrix[j, i] / augmented_matrix[i, i]
+                augmented_matrix[j, :] -= factor * augmented_matrix[i, :]
+
+
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-                                                 #
-    
-    
-    
-    
+
     
     ###########################################################################
     ###########################################################################
