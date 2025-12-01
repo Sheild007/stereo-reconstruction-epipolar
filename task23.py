@@ -154,7 +154,7 @@ def find_triangulation(K1, K2, F, pts1, pts2):
 if __name__ == '__main__':
 
     # You can run it on one or all the examples
-    names = os.listdir("task23")
+    names = os.listdir("data/task23")
     output = "results/"
 
     if not os.path.exists(output):
@@ -164,11 +164,11 @@ if __name__ == '__main__':
         print(name)
 
         # load the information
-        img1 = cv2.imread(os.path.join("task23", name, "im1.png"))
+        img1 = cv2.imread(os.path.join("data/task23", name, "im1.png"))
         img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
-        img2 = cv2.imread(os.path.join("task23", name, "im2.png"))
+        img2 = cv2.imread(os.path.join("data/task23", name, "im2.png"))
         img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
-        data = np.load(os.path.join("task23", name, "data.npz"))
+        data = np.load(os.path.join("data/task23", name, "data.npz"))
         pts1 = data['pts1'].astype(float)
         pts2 = data['pts2'].astype(float)
         K1 = data['K1']
