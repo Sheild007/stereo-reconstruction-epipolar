@@ -71,8 +71,21 @@ def find_projection(pts2d, pts3d):
                 augmented_matrix[j, :] -= factor * augmented_matrix[i, :]
 
 
-    
+    # converting to Reduced Echelon form    
+    for i in range(10, -1, -1):  
+        pivot = augmented_matrix[i, i]
 
+        if abs(pivot) >= 1e-10:
+            augmented_matrix[i, :] = augmented_matrix[i, :] / pivot
+
+            for j in range(0, i):
+                factor = augmented_matrix[j, i]
+                augmented_matrix[j, :] -= factor * augmented_matrix[i, :]
+
+    
+    
+    
+    
     
     ###########################################################################
     ###########################################################################
