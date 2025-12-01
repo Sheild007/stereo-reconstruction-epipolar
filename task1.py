@@ -46,11 +46,11 @@ def find_projection(pts2d, pts3d):
   
     At_b = np.zeros(11)
     for i in range(11):
-        At_A[i] = np.sum(A[:, i] * b)
+        At_b[i] = np.sum(A[:, i] * b)
     
     
     
-    augmented_matrix=np.zeros(11,12)
+    augmented_matrix = np.zeros((11, 12))
     augmented_matrix[:,:11]=At_A
     augmented_matrix[:,11]=At_b
 
