@@ -43,10 +43,47 @@ def find_fundamental_matrix(shape, pts1, pts2):
     Returns:
     - F: Numpy array of shape (3,3) giving the fundamental matrix F
     """
-    F = None
+  
     ###########################################################################
-    # TODO: Your code here                                                    #
+    
+    pts1_norm, T1 = normalize_points(pts1)
+    pts2_norm, T2 = normalize_points(pts2)
+
+    
+    u  = pts1_norm[:, 0]
+    v  = pts1_norm[:, 1]
+    up = pts2_norm[:, 0]  
+    vp = pts2_norm[:, 1]  
+
+    total_points = pts1.shape[0]
+    matrix_U = np.zeros((total_points, 9))
+    matrix_U[:, 0] = up * u
+    matrix_U[:, 1] = up * v
+    matrix_U[:, 2] = up
+    matrix_U[:, 3] = vp * u
+    matrix_U[:, 4] = vp * v
+    matrix_U[:, 5] = vp
+    matrix_U[:, 6] = u
+    matrix_U[:, 7] = v
+    matrix_U[:, 8] = 1
+
+
+ 
+       
+    _, _, Vt = np.linalg.svd(matrix_U, full_matrices=False)
+    
+    F_rank3 = Vt[-1].reshape(3, 3)
+
+    U_F, S_F, Vt_F = np.linalg.svd(F_rank3)
+    
+    S_F[2] = 0
+    
+    F_rank2 = U_F @ np.diag(S_F) @ Vt_F
+
+    F = T2.T @ F_rank2 @ T1
     ###########################################################################
+
+
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
