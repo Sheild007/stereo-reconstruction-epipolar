@@ -4,8 +4,27 @@ import cv2
 import os
 
 
+
+def normalize_points(pts):
+    
+    mean = np.mean(pts, axis=0)
+    centered_pts = pts - mean
+    mean_dist = np.mean(np.sqrt(np.sum(centered_pts**2, axis=1)))
+    scale = np.sqrt(2) / mean_dist
+    
+    T = np.array([
+        [scale, 0, -scale * mean[0]],
+        [0, scale, -scale * mean[1]],
+        [0, 0, 1]
+    ])
+    
+    homogeneous_pts = utils.homogenize(pts)
+    normalized_pts = (T @ homogeneous_pts.T).T
+    return utils.dehomogenize(normalized_pts), T
+   
+
 def find_fundamental_matrix(shape, pts1, pts2):
-    """
+    """ 
     Computes Fundamental Matrix F that relates points in two images by the:
 
         [u' v' 1] F [u v 1]^T = 0
