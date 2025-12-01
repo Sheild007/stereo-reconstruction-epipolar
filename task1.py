@@ -22,7 +22,47 @@ def find_projection(pts2d, pts3d):
     """
     M = None
     ###########################################################################
-    # TODO: Your code here                                                    #
+    
+    
+    total_points = pts2d.shape[0]
+    A = np.zeros((2 * total_points, 11))
+    b = np.zeros(2 * total_points)
+
+    for i in range(total_points):
+
+        X, Y, Z ,u,v= pts3d[i, 0], pts3d[i, 1], pts3d[i, 2], pts2d[i, 0], pts2d[i, 1]
+           
+        A[2 * i, :] = [X, Y, Z, 1, 0, 0, 0, 0, -u * X, -u * Y, -u * Z]
+        A[2 * i + 1, :] = [0, 0, 0, 0, X, Y, Z, 1, -v * X, -v * Y, -v * Z]
+
+        b[2 * i] = u
+        b[2 * i + 1] = v
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+                                                 #
+    
+    
+    
+    
+    
     ###########################################################################
     ###########################################################################
     #                             END OF YOUR CODE                            #
