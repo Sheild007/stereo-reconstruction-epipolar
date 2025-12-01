@@ -120,3 +120,27 @@ if __name__ == '__main__':
     pts3d = data['pts1_3D']
     """
 
+    M = find_projection(pts2d, pts3d)
+    print("The Projection Matrix M is:")
+    print(M)
+    print("\n")
+
+
+    num_3d_points = pts3d.shape[0]
+    pts3d_homogeneous = utils.homogenize(pts3d)
+
+    projected_homogeneous = pts3d_homogeneous @ M.T
+
+    projected_2d = utils.dehomogenize(projected_homogeneous) 
+
+    error = 0.0
+    for i in range(num_3d_points):
+        error += np.linalg.norm(projected_2d[i, :] - pts2d[i, :])
+    average_error = error / num_3d_points
+    print(f"Average distance error: {average_error:.6f} pixels")
+    print("\n")
+   
+        
+
+
+
