@@ -18,9 +18,9 @@ def normalize_points(pts):
         [0, 0, 1]
     ])
     
-    homogeneous_pts = utils.homogenize(pts)
+    homogeneous_pts = homogenize(pts)
     normalized_pts = (T @ homogeneous_pts.T).T
-    return utils.dehomogenize(normalized_pts), T
+    return dehomogenize(normalized_pts), T
    
 
 def find_fundamental_matrix(shape, pts1, pts2):
@@ -193,6 +193,6 @@ if __name__ == '__main__':
             print(f"Epipoles for {name}:\n e1: {e1}\n e2: {e2}")
            
 
-        draw_epipolar(img1, img2, F, pts1, pts2, file_name=os.path.join(output, f"{name}_epipolar.png"))
+        draw_epipolar(img1, img2, F, pts1, pts2, filename=os.path.join(output, f"{name}_epipolar.png"))
         print(f"Saved visualization to {output}{name}_epipolar.png")
         #######################################################################
