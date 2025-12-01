@@ -20,7 +20,7 @@ def find_projection(pts2d, pts3d):
     - P: Numpy array of shape (3,4) giving the camera projection matrix P
 
     """
-     M=np.zeros((3,4))
+    M=np.zeros((3,4))
     ###########################################################################
     
     
