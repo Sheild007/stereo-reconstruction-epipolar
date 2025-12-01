@@ -50,7 +50,10 @@ def find_projection(pts2d, pts3d):
     
     
     
-    
+    augmented_matrix=np.zeros(11,12)
+    augmented_matrix[:,:11]=At_A
+    augmented_matrix[:,11]=At_b
+
     
     
     
