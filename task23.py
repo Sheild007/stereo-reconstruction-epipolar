@@ -239,4 +239,16 @@ if __name__ == '__main__':
 
         draw_epipolar(img1, img2, F, pts1, pts2, filename=os.path.join(output, f"{name}_epipolar.png"))
         print(f"Saved visualization to {output}{name}_epipolar.png")
+
+        
+        if name == "reallyInwards":
+            
+            print(f"\n--- Processing Task 3 for {name} ---")
+            E = K2.T @ F @ K1
+            print("Essential Matrix E:\n", E)
+            pcd = find_triangulation(K1, K2, F, pts1, pts2)
+            pcd_euclidean = (pcd[:, :3] / pcd[:, 3:]).T 
+            
+            visualize_pcd(pcd_euclidean, filename=os.path.join(output, f"{name}_3D.png"))
+            print(f"Saved 3D reconstruction to {output}{name}_3D.png")
         #######################################################################
