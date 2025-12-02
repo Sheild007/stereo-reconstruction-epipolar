@@ -142,12 +142,56 @@ def find_triangulation(K1, K2, F, pts1, pts2):
       data
     """
     pcd = None
+    ########################################################################
     ###########################################################################
-    # TODO: Your code here                                                    #
-    ###########################################################################
+   
+    E = K2.T @ F @ K1
+    R1, R2, t = cv2.decomposeEssentialMat(E)
+    candidates = [
+        (R1, t),
+        (R1, -t),
+        (R2, t),
+        (R2, -t)
+    ]
+
+    M1 = K1 @ np.hstack((np.eye(3), np.zeros((3, 1))))
+
+    best_count = -1
+    best_pcd = None
+
+    for R, t_vec in candidates:
+        
+        extrinsic = np.hstack((R, t_vec))
+        M2 = K2 @ extrinsic
+
+        pts4D_hom = cv2.triangulatePoints(M1, M2, pts1.T, pts2.T)
+        w = pts4D_hom[3, :]
+        safe_indices = np.abs(w) > 1e-10
+        Z_cam1 = pts4D_hom[2, safe_indices] / w[safe_indices]
+       
+        X_hom = pts4D_hom[:, safe_indices]
+        X_cam2_hom = extrinsic @ X_hom 
+        Z_cam2 = X_cam2_hom[2, :] / w[safe_indices]
+
+     
+        valid_points = (Z_cam1 > 0) & (Z_cam2 > 0)
+        count = np.sum(valid_points)
+
+        if count > best_count:
+            best_count = count
+            best_pcd = pts4D_hom.T
+
+    print(f"Selected solution with {best_count}/{pts1.shape[0]} valid points.")
+    pcd = best_pcd
+
+
+
+
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
+    
+
     return pcd
 
 
